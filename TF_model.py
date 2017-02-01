@@ -123,8 +123,8 @@ optimizer = tf.train.AdamOptimizer(learning_rate = rate)
 training_operation = optimizer.minimize(loss_operation)
 
 ### MODEL EVALUATION ###
-correct_prediction = tf.equal(logits, 1), tf.argmax(one_hot_y, 1))
-accuracy_operation = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+cost = tf.reduce_mean(tf.square(tf.sub(logits, y)))
+
 saver = tf.train.Saver()
 
 def evaluate(X_data, y_data):
@@ -133,7 +133,7 @@ def evaluate(X_data, y_data):
     sess = tf.get_default_session()
     for offset in range(0, num_examples, BATCH_SIZE):
         batch_x, batch_y = X_data[offset:offset+BATCH_SIZE], y_data[offset:offset+BATCH_SIZE]
-        accuracy = sess.run(accuracy_operation, feed_dict={x: batch_x, y: batch_y})
+        accuracy = sess.run(cost, feed_dict={x: batch_x, y: batch_y})
         total_accuracy += (accuracy * len(batch_x))
     return total_accuracy / num_examples
 
@@ -153,7 +153,7 @@ with tf.Session() as sess:
             
         validation_accuracy = evaluate(X_validation, y_validation)
         print("EPOCH {} ...".format(i+1))
-        print("Validation Accuracy = {:.3f}".format(validation_accuracy))
+        print("MSE Cost = {:.3f}".format(validation_accuracy))
         print()
         
     saver.save(sess, 'lenet')
