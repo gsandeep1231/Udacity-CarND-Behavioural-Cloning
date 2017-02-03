@@ -36,7 +36,9 @@ def telemetry(sid, data):
     # The current image from the center camera of the car
     imgString = data["image"]
     image = Image.open(BytesIO(base64.b64decode(imgString)))
+    image = image.resize((100,50))
     image_array = np.asarray(image)
+    image_array = (image_array/255.)*2 - 1
     transformed_image_array = image_array[None, :, :, :]
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
     steering_angle = float(model.predict(transformed_image_array, batch_size=1))
@@ -71,7 +73,8 @@ if __name__ == '__main__':
         #   model = model_from_json(json.loads(jfile.read()))\
         #
         # instead.
-        model = model_from_json(jfile.read())
+        #model = model_from_json(jfile.read())
+        model = model_from_json(json.loads(jfile.read()))
 
 
     model.compile("adam", "mse")

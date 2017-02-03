@@ -1,10 +1,13 @@
 import argparse
 import base64
 import json
+import csv
+import cv2
+import numpy as np
+import os
 from urllib.request import urlretrieve
 from os.path import isfile
 from tqdm import tqdm
-import csv
 from sklearn.utils import shuffle
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten
@@ -12,17 +15,22 @@ from keras.layers.convolutional import Convolution2D
 from PIL import Image
 from PIL import ImageOps
 from io import BytesIO
-import cv2
 from keras.models import load_model
 
-
-data = csv.reader(open('myDrivingData/driving_log.csv'), delimiter=",",quotechar='|')
+cwd = os.getcwd()
+driving_log = cwd + '/data/driving_log.csv'
+print('Reading csv file', driving_log)
+data = csv.reader(open(driving_log), delimiter=",",quotechar='|')
 img_center = []
 img_left = []
 img_right = []
 steering = []
+print('Looping CSV')
 for row in data:
-    imgString = row[0]
+    imgString = cwd + '/data/' + row[0]
+    #image = Image.open(imgString)
+    #print('Resizing image', imgString)
+    #image = image.resize((100,50))
     image = cv2.imread(imgString)
     image = cv2.resize(image, (100,50))
     img_center.append(image)
@@ -70,9 +78,24 @@ model.add(Activation('relu'))
 model.add(Dense(10))
 model.add(Activation('relu'))
 model.add(Dense(1))
-model.add(Activation('softmax'))
+#model.add(Activation('softmax'))
     
 # TODO: Compile and train the model
-model.compile(optimizer=Adam(), loss="mse")
+model.compile(loss='mean_squared_error', optimizer='adam')
 history = model.fit(X_normalized, y_train, nb_epoch=10, validation_split=0.2)
-model.save('my_model.h5')
+
+################################################################
+
+# Save the model and weights
+
+################################################################
+
+model_json = model.to_json()
+
+with open("./model.json", "w") as json_file:
+
+    json.dump(model_json, json_file)
+
+model.save_weights("./model.h5")
+
+print("Saved model to disk")
