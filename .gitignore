@@ -1,4 +1,10 @@
 data
+data2
+data3
 IMG
 myDrivingData
+myDrivingData2
 data.zip
+*.h5
+*.json
+.ipynb_checkpoints
