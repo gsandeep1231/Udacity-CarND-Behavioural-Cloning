@@ -11,7 +11,7 @@ from PIL import Image
 from PIL import ImageOps
 from flask import Flask, render_template
 from io import BytesIO
-
+from img_utils import *
 from keras.models import model_from_json
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array
 
@@ -36,12 +36,13 @@ def telemetry(sid, data):
     # The current image from the center camera of the car
     imgString = data["image"]
     image = Image.open(BytesIO(base64.b64decode(imgString)))
-    image = image.resize((100,50))
+    #image = image.resize((100,50))
     image_array = np.asarray(image)
-    image_array = (image_array/255.)*2 - 1
+    #image_array = (image_array/255.)*2 - 1
     transformed_image_array = image_array[None, :, :, :]
+    img_processed = preprocess_test_img(transformed_image_array)
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
-    steering_angle = float(model.predict(transformed_image_array, batch_size=1))
+    steering_angle = float(model.predict(img_processed, batch_size=1))
     # The driving model currently just outputs a constant throttle. Feel free to edit this.
     throttle = 0.2
     print(steering_angle, throttle)

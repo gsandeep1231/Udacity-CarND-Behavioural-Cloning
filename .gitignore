@@ -4,7 +4,11 @@ data3
 IMG
 myDrivingData
 myDrivingData2
+myDrivingData3
 data.zip
 *.h5
 *.json
 .ipynb_checkpoints
+model_v1.py
+__pycache__
+other_utils.py
