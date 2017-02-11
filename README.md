@@ -15,4 +15,22 @@ wherever the model needed more training, especially at tight corners.
 Pre-processing the data was very important since there is a lot of unwanted noise in the data. We want to focus only
 on the track. So I trimmed the data of the background and converted the image to thresholded grayscale image so 
 that it is easy and faster for the model to train rather than training on raw color image.
-Below is the pipeline I used:
+Below is the pipeline I used:<BR>
+1. Trim Image<BR>
+2. Threshold Image<BR>
+3. Grayscale Image<BR>
+4. Normalize Image<BR>
+5. Resize Image<BR>
+<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_1_original.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_1_original.png)<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_2_trimmed.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_2_trimmed.png)<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_3_threshold.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_3_threshold.png)<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_4_gray.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_4_gray.png)<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_5_normalize.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_5_normalize.png)<BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_6_resize.png)
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_6_resize.png)<BR>
