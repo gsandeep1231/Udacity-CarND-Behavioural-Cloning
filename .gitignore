@@ -1,7 +1,6 @@
 data
 IMG
 myDrivingData
-*.h5
 *.json
 .ipynb_checkpoints
 model_v1.py
@@ -9,3 +8,4 @@ __pycache__
 other_utils.py
 drivingDataBackup
 .DS_Store
+tmp
