@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 import cv2
 import csv
 import os
@@ -17,7 +18,7 @@ BATCH_SIZE = 128
 NUM_EPOCHS = 5
 
 ######################################
-###### READ CSV #######
+# READ CSV 
 ######################################
 
 cwd = os.getcwd()
@@ -69,6 +70,7 @@ for row in data:
     steering.append(row[3])
 img_center = np.asarray(img_center)
 steering_center = np.asarray(steering, dtype=np.float32)
+#steering_center[steering_center<-0.33] = steering_center[steering_center<-0.33]*0.6
 X_train = np.concatenate([X_train, img_center])
 y_train = np.concatenate([y_train, steering_center])
 
@@ -135,3 +137,22 @@ with open("./model.json", "w") as json_file:
 
 model.save_weights("./model.h5")
 print("Saved model to disk")
+
+################################################################
+# visualize model history for loss
+################################################################
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.savefig('model_loss_plot.png')
+
+################################################################
+# visualize model
+################################################################
+
+from keras.utils.visualize_util import plot
+plot(model, to_file='model_graph.png')
