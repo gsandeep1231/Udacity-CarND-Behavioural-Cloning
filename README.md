@@ -38,6 +38,8 @@ Below is the pipeline I used:<BR>
 ![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_6_resize.png)
 ![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_6_resize.png)<BR>
 
+All preprocessing functions are defined in img_utils.py
+
 ##Creating Validation Set
 The training data has been shuffled and then split to training and validation set with 80-20 split respectively. 
 Test set is not needed for this project since the simulator in autonomous mode itself will act as the test set. 
