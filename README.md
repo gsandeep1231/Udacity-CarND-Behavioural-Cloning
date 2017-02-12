@@ -68,6 +68,7 @@ Batch size selected was 128. I started with epochs as 10 but realized didn't gai
 in training in the later epochs. So narrowed it down to 5 which was sufficient for a good validation loss
 
 ##Results
-Training took around 2 mins for each epoch.<BR>
+Training took around 2 mins for each epoch. Below is the graph for training loss/validation loss vs epoch <BR>
+![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/model_loss_plot.png)
 I however did not have successful testing of my model. I am not sure what is causing this. I collected all recovery data too, but for some reason my car does not seem to correcting itself at all the corners properly. When I train it at one corner, I see a new error in another corner where it previously drove correctly. 
 I have spent way too many hours on this project and wanted to check it in with the results I have so far. Any help to improve my model or training set is greatly appreciated.
