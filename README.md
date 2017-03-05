@@ -25,7 +25,7 @@ Below is the pipeline I used:<BR>
 4. Normalize Image<BR>
 5. Resize Image<BR>
 <BR>
-![alt tag](README_images/image1_1_original.png)<BR>
+![alt tag](README_images/image1_1_original.png)
 ![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_1_original.png)<BR>
 ![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_2_trimmed.png)
 ![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_2_trimmed.png)<BR>
