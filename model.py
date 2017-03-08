@@ -123,8 +123,8 @@ def mySimpleModel2():
     return model
 
 def mySimpleModel3():
-    input_shape = (25, 100, 1)
-    #input_shape = (64, 64, 3)
+    #input_shape = (25, 100, 1)
+    input_shape = (64, 64, 3)
     filter_size = 3
     pool_size = (2,2)
     model = Sequential()
