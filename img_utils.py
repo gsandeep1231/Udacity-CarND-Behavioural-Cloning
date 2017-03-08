@@ -71,7 +71,7 @@ def shift_image(imgs,steerings,shift_range):
         shift_steerings.append(steering)
         rows,cols,channels = img.shape
         tr_x = shift_range*np.random.uniform()-shift_range/2
-        new_steer = steering + tr_x/shift_range*2*.10
+        new_steer = steering + tr_x/shift_range*2*.2
         tr_y = 10*np.random.uniform()-10/2
         Trans_M = np.float32([[1,0,tr_x],[0,1,tr_y]])
         new_img = cv2.warpAffine(img,Trans_M,(cols,rows))

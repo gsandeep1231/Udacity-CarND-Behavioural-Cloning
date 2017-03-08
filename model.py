@@ -47,7 +47,7 @@ X_train=[]
 y_train=[]
 
 # Merge left/right image data
-correction = 0.08
+correction = 0.15
 tmp_image = np.concatenate([img_center, img_left])
 steering_left = steering_center
 steering_left[steering_left>0] = steering_left[steering_left>0] + correction
@@ -138,6 +138,7 @@ def mySimpleModel3():
     model.add(Convolution2D(36, 3, 3, subsample=(2,2)))
     model.add(MaxPooling2D((2, 2)))
     model.add(Activation('relu'))
+    model.add(Dropout(0.5))
     model.add(Convolution2D(48, 3, 3, subsample=(2,2)))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
