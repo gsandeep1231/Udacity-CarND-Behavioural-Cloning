@@ -62,21 +62,25 @@ y_train[y_train > 1] = 1.0
 y_train[y_train < -1] = -1.0
 
 #Read in my Sample data
+csvFiles = []
 driving_log = cwd + '/myDrivingData/driving_log.csv'
-print('Reading csv file', driving_log)
-data = csv.reader(open(driving_log), delimiter=",",quotechar='|')
-img_center = []
-steering = []
-print('Looping CSV')
-for row in data:
-    img_center.append(row[0])
-    steering.append(row[3])
-img_center = np.asarray(img_center)
-steering_center = np.asarray(steering, dtype=np.float32)
-#steering_center[steering_center<-0.33] = steering_center[steering_center<-0.33]*0.6
+csvFiles.append(driving_log)
+driving_log = cwd + '/myDrivingData_out/driving_log.csv'
+csvFiles.append(driving_log)
 
-X_train = np.concatenate([X_train, img_center])
-y_train = np.concatenate([y_train, steering_center])
+for driving_log in csvFiles:
+    print('Reading csv file', driving_log)
+    data = csv.reader(open(driving_log), delimiter=",",quotechar='|')
+    img_center = []
+    steering = []
+    print('Looping CSV')
+    for row in data:
+        img_center.append(row[0])
+        steering.append(row[3])
+    img_center = np.asarray(img_center)
+    steering_center = np.asarray(steering, dtype=np.float32)
+    X_train = np.concatenate([X_train, img_center])
+    y_train = np.concatenate([y_train, steering_center])
 
 print('Final Img Size: ', X_train.shape)
 print('Final Steering Size: ', y_train.shape)
