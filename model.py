@@ -11,7 +11,7 @@ from keras.layers import Dense, Dropout, Flatten, Activation, ELU, Conv2D, ConvL
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
 from img_utils import *
-from other_utils import *
+#from other_utils import *
 from sklearn.model_selection import train_test_split
 
 BATCH_SIZE = 128
@@ -43,21 +43,24 @@ img_center = np.asarray(img_center)
 img_left = np.asarray(img_left)
 img_right = np.asarray(img_right)
 steering_center = np.asarray(steering, dtype=np.float32)
+X_train=[]
+y_train=[]
 
 # Merge left/right image data
+correction = 0.15
 tmp_image = np.concatenate([img_center, img_left])
 steering_left = steering_center
-steering_left[steering_left>0] = steering_left[steering_left>0]*1.5
-steering_left[steering_left<0] = steering_left[steering_left<0]*0.5
+steering_left[steering_left>0] = steering_left[steering_left>0] + correction
+steering_left[steering_left<0] = steering_left[steering_left<0] - correction
 tmp_steering = np.concatenate([steering_center, steering_left])
 X_train = np.concatenate([tmp_image, img_right])
 steering_right = steering_center
-steering_right[steering_right>0] = steering_right[steering_right>0]*0.5
-steering_right[steering_right<0] = steering_right[steering_right<0]*1.5
+steering_right[steering_right>0] = steering_right[steering_right>0] - correction
+steering_right[steering_right<0] = steering_right[steering_right<0] + correction
 y_train = np.concatenate([tmp_steering, steering_right])
 y_train[y_train > 1] = 1.0
 y_train[y_train < -1] = -1.0
-
+'''
 # Read in my Sample data
 driving_log = cwd + '/myDrivingData/driving_log.csv'
 print('Reading csv file', driving_log)
@@ -71,8 +74,9 @@ for row in data:
 img_center = np.asarray(img_center)
 steering_center = np.asarray(steering, dtype=np.float32)
 #steering_center[steering_center<-0.33] = steering_center[steering_center<-0.33]*0.6
-X_train = np.concatenate([X_train, img_center])
-y_train = np.concatenate([y_train, steering_center])
+'''
+#X_train = np.concatenate([X_train, img_center])
+#y_train = np.concatenate([y_train, steering_center])
 
 print('Final Img Size: ', X_train.shape)
 print('Final Steering Size: ', y_train.shape)
@@ -154,5 +158,5 @@ plt.savefig('model_loss_plot.png')
 # visualize model
 ################################################################
 
-from keras.utils.visualize_util import plot
-plot(model, to_file='model_graph.png')
+#from keras.utils.visualize_util import plot
+#plot(model, to_file='model_graph.png')

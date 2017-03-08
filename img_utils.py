@@ -32,7 +32,8 @@ def threshold_images(imgs):
     return imgs_thresh
 
 def normalize_images(imgs):
-    imgs = (imgs/255.)*2 - 1
+    #imgs = (imgs/255.)*2 - 1
+    imgs = (imgs/255.) - 0.5
     return imgs
 
 def resize_images(imgs):
@@ -41,14 +42,35 @@ def resize_images(imgs):
         imgs_resized[i] = cv2.resize(img, (100, 25))
     return imgs_resized
 
-def preprocess_batch(img_paths):
+def augment_mirror_img(imgs, steerings):
+    aug_imgs = []
+    aug_steerings = []
+    #print("current img size:", len(imgs))
+    #print("current steering size:", len(steerings))
+    for img, steering in zip(imgs, steerings):
+        aug_imgs.append(img)
+        aug_steerings.append(steering)
+        flipped_img = cv2.flip(img, 1)
+        flipped_steering = steering * -1.0
+        aug_imgs.append(flipped_img)
+        aug_steerings.append(flipped_steering)
+    #print("new img size:", len(aug_imgs))
+    #print("new steering size:", len(aug_steerings))
+    aug_imgs = np.asarray(aug_imgs)
+    aug_steerings = np.asarray(aug_steerings)
+    return aug_imgs, aug_steerings
+        
+        
+
+def preprocess_batch(img_paths, steerings):
     imgs = read_images(img_paths)
     imgs = trim_images(imgs)
     imgs = threshold_images(imgs)
     imgs = normalize_images(imgs)
     imgs = resize_images(imgs)
+    imgs, steerings = augment_mirror_img(imgs, steerings)
     imgs = imgs.reshape(imgs.shape[0], 25, 100, 1)
-    return imgs
+    return imgs, steerings
 
 def preprocess_test_img(imgs):
     imgs = trim_images(imgs)
@@ -62,5 +84,5 @@ def process_batch(imgs, steerings, batch_size):
     size_images = len(imgs)
     while True:
         batch = np.random.choice(size_images, batch_size)
-        batch_imgs, batch_steerings = preprocess_batch(imgs[batch]), steerings[batch].astype(float)
+        batch_imgs, batch_steerings = preprocess_batch(imgs[batch], steerings[batch].astype(float))
         yield batch_imgs, batch_steerings
