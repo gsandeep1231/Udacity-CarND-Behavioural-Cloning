@@ -91,3 +91,5 @@ In order to test the model in the simulator, run below command:
 ```
 $python drive.py model.json
 ```
+I have also created a video that shows how to view the result on the simulator:
+https://youtu.be/q7Yade-dzeA
