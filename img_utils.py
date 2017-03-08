@@ -37,10 +37,12 @@ def normalize_images(imgs):
     return imgs
 
 def resize_images(imgs):
-    imgs_resized = np.empty([len(imgs), 25, 100])
+    new_imgs = []
     for i, img in enumerate(imgs):
-        imgs_resized[i] = cv2.resize(img, (100, 25))
-    return imgs_resized
+        img1 = cv2.resize(img, (64, 64))
+        new_imgs.append(img1)
+    new_imgs = np.asarray(new_imgs)
+    return new_imgs
 
 def augment_mirror_img(imgs, steerings):
     aug_imgs = []
@@ -60,9 +62,58 @@ def augment_mirror_img(imgs, steerings):
     aug_steerings = np.asarray(aug_steerings)
     return aug_imgs, aug_steerings
         
-        
+def shift_image(imgs,steerings,shift_range):
+    shift_imgs = []
+    shift_steerings = []
+    for img, steering in zip(imgs, steerings):
+        shift_imgs.append(img)
+        shift_steerings.append(steering)
+        tr_x = shift_range*np.random.uniform()-shift_range/2
+        new_steer = steering + tr_x/shift_range*2*.2
+        tr_y = 10*np.random.uniform()-10/2
+        Trans_M = np.float32([[1,0,tr_x],[0,1,tr_y]])
+        new_img = cv2.warpAffine(img,Trans_M,(cols,rows))
+        shift_imgs.append(new_img)
+        shift_steerings.append(new_steer)
+    shift_imgs = np.asarray(shift_imgs)
+    shift_steerings = np.asarray(shift_steerings)
+    return shift_imgs, shift_steerings
+
+def add_brightness(imgs):
+    new_imgs = []
+    for i, img in enumerate(imgs):
+        img1 = cv2.cvtColor(img,cv2.COLOR_RGB2HSV)
+        random_bright = .25+np.random.uniform()
+        img1[:,:,2] = img1[:,:,2]*random_bright
+        img1 = cv2.cvtColor(img1,cv2.COLOR_HSV2RGB)
+        new_imgs.append(img1)
+    new_imgs = np.asarray(new_imgs)
+    return new_imgs
+
+def trim_image_new(imgs):
+    new_imgs = []
+    for i, img in enumerate(imgs):
+        shape = img.shape
+        img = img[math.floor(shape[0]/4+10):shape[0]-25, 0:shape[1]]
+        new_imgs.append(img)
+    new_imgs = np.asarray(new_imgs)
+    return new_imgs
 
 def preprocess_batch(img_paths, steerings):
+    imgs = read_images(img_paths)
+    imgs, steerings = shift_image(imgs, steerings, 150)
+    imgs = add_brightness(imgs)
+    imgs = trim_image_new(imgs)
+    imgs = resize_images(imgs)
+    imgs, steerings = augment_mirror_img(imgs, steerings)
+    return imgs, steerings
+
+def preprocess_test_img(imgs):
+    imgs = trim_image_new(imgs)
+    imgs = resize_images(imgs)
+    return imgs
+    
+def preprocess_batch_old(img_paths, steerings):
     imgs = read_images(img_paths)
     imgs = trim_images(imgs)
     imgs = threshold_images(imgs)
@@ -72,7 +123,7 @@ def preprocess_batch(img_paths, steerings):
     imgs = imgs.reshape(imgs.shape[0], 25, 100, 1)
     return imgs, steerings
 
-def preprocess_test_img(imgs):
+def preprocess_test_img_old(imgs):
     imgs = trim_images(imgs)
     imgs = threshold_images(imgs)
     imgs = normalize_images(imgs)

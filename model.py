@@ -160,9 +160,7 @@ def mySimpleModel3():
     model.add(Dropout(0.5))
     model.add(Dense(1, name='output', init='he_normal'))
     return model
-    
-    
-    
+
 
 model = mySimpleModel3()
 model.compile(loss='mean_squared_error', optimizer='adam')
