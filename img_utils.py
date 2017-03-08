@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.image as mpimg
 import cv2
+import math
 
 ######################################
 ###### PREPROCESSING FUNCTIONS #######
