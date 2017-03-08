@@ -135,11 +135,11 @@ def mySimpleModel3():
     model.add(Lambda(lambda x: x/255.-0.5,input_shape=input_shape))
     #model.add(Convolution2D(36, 3, 3, subsample=(2,2), input_shape=(25, 100, 1)))
     model.add(Convolution2D(3, 1, 1, input_shape=input_shape))
-    model.add(Convolution2D(36, 3, 3, subsample=(2,2)))
+    model.add(Convolution2D(36, 3, 3, subsample=(1,1)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D((2, 2)))
     model.add(Dropout(0.5))
-    model.add(Convolution2D(64, 3, 3, subsample=(2,2)))
+    model.add(Convolution2D(64, 3, 3, subsample=(1,1)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D((2, 2)))
     model.add(Dropout(0.5))
@@ -205,7 +205,7 @@ def save_model(file_json,file_weights):
     with open(file_json, "w") as json_file:
         json.dump(model_json, json_file)
     model.save_weights(file_weights)
-    print("Saved model to file,"file_json)
+    print("Saved model to file",file_json)
 
 model = mySimpleModel3()
 model.compile(loss='mean_squared_error', optimizer='adam')
