@@ -164,7 +164,7 @@ def mySimpleModel3():
     
     
 
-model = mySimpleModel2()
+model = mySimpleModel3()
 model.compile(loss='mean_squared_error', optimizer='adam')
 history = model.fit_generator(process_batch(X_train, y_train, BATCH_SIZE),
                                   len(X_train),
