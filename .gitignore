@@ -1,6 +1,6 @@
 data
 IMG
-myDrivingData
+myDrivingData*
 *.json
 .ipynb_checkpoints
 model_v1.py
