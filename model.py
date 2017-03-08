@@ -7,7 +7,7 @@ import os
 import json
 from sklearn.utils import shuffle
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Activation, ELU, Conv2D, ConvLSTM2D
+from keras.layers import Dense, Dropout, Flatten, Activation, ELU, Conv2D, ConvLSTM2D, Lambda
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
 from img_utils import *
