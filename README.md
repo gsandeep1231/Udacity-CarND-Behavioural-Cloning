@@ -25,18 +25,18 @@ Below is the pipeline I used:<BR>
 4. Normalize Image<BR>
 5. Resize Image<BR>
 <BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_1_original.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_1_original.png)<BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_2_trimmed.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_2_trimmed.png)<BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_3_threshold.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_3_threshold.png)<BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_4_gray.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_4_gray.png)<BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_5_normalize.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_5_normalize.png)<BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image1_6_resize.png)
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/README_images/image2_6_resize.png)<BR>
+![alt tag](README_images/image1_1_original.png)
+![alt tag](README_images/image2_1_original.png)<BR>
+![alt tag](README_images/image1_2_trimmed.png)
+![alt tag](README_images/image2_2_trimmed.png)<BR>
+![alt tag](README_images/image1_3_threshold.png)
+![alt tag](README_images/image2_3_threshold.png)<BR>
+![alt tag](README_images/image1_4_gray.png)
+![alt tag](README_images/image2_4_gray.png)<BR>
+![alt tag](README_images/image1_5_normalize.png)
+![alt tag](README_images/image2_5_normalize.png)<BR>
+![alt tag](README_images/image1_6_resize.png)
+![alt tag](README_images/image2_6_resize.png)<BR>
 
 All preprocessing functions are defined in img_utils.py
 
@@ -71,6 +71,6 @@ in training in the later epochs. So narrowed it down to 5 which was sufficient f
 
 ##Results
 Training took around 2 mins for each epoch. Below is the graph for training loss/validation loss vs epoch <BR>
-![alt tag](https://github.com/gsandeep1231/Udacity-CarND-Behavioural-Cloning/blob/master/model_loss_plot.png)
+![alt tag](model_loss_plot.png)
 I however did not have successful testing of my model. I am not sure what is causing this. I collected all recovery data too, but for some reason my car does not seem to correcting itself at all the corners properly. When I train it at one corner, I see a new error in another corner where it previously drove correctly. 
 I have spent way too many hours on this project and wanted to check it in with the results I have so far. Any help to improve my model or training set is greatly appreciated.
