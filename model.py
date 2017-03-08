@@ -47,7 +47,7 @@ X_train=[]
 y_train=[]
 
 # Merge left/right image data
-correction = 0.10
+correction = 0.08
 tmp_image = np.concatenate([img_center, img_left])
 steering_left = steering_center
 steering_left[steering_left>0] = steering_left[steering_left>0] + correction
