@@ -67,8 +67,8 @@ def shift_image(imgs,steerings,shift_range):
     shift_imgs = []
     shift_steerings = []
     for img, steering in zip(imgs, steerings):
-        shift_imgs.append(img)
-        shift_steerings.append(steering)
+        #shift_imgs.append(img)
+        #shift_steerings.append(steering)
         rows,cols,channels = img.shape
         tr_x = shift_range*np.random.uniform()-shift_range/2
         new_steer = steering + tr_x/shift_range*2*.2

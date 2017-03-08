@@ -102,11 +102,14 @@ def mySimpleModel1():
     return model
 
 def mySimpleModel2():
+    input_shape = (64, 64, 3)
     model = Sequential()
-    model.add(Convolution2D(36, 3, 3, subsample=(2,2), input_shape=(25, 100, 1)))
+    model.add(Lambda(lambda x: x/255.-0.5,input_shape=input_shape))
+    #model.add(Convolution2D(36, 3, 3, subsample=(2,2), input_shape=(25, 100, 1)))
+    model.add(Convolution2D(36, 3, 3, subsample=(2,2), input_shape=input_shape))
     model.add(MaxPooling2D((2, 2)))
     model.add(Activation('relu'))
-    model.add(Convolution2D(48, 3, 3, subsample=(1,1)))
+    model.add(Convolution2D(48, 3, 3, subsample=(2,2)))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Convolution2D(64, 3, 3, subsample=(1,1)))
@@ -162,7 +165,7 @@ def mySimpleModel3():
     return model
 
 
-model = mySimpleModel3()
+model = mySimpleModel2()
 model.compile(loss='mean_squared_error', optimizer='adam')
 history = model.fit_generator(process_batch(X_train, y_train, BATCH_SIZE),
                                   len(X_train),
