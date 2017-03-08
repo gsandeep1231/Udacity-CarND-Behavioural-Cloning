@@ -15,7 +15,7 @@ from img_utils import *
 from sklearn.model_selection import train_test_split
 
 BATCH_SIZE = 128
-NUM_EPOCHS = 5
+NUM_EPOCHS = 1
 
 ######################################
 # READ CSV 
@@ -134,24 +134,25 @@ def mySimpleModel3():
     model = Sequential()
     model.add(Lambda(lambda x: x/255.-0.5,input_shape=input_shape))
     #model.add(Convolution2D(36, 3, 3, subsample=(2,2), input_shape=(25, 100, 1)))
-    model.add(Convolution2D(3, 1, 1, subsample=(1,1), input_shape=input_shape))
-    model.add(Convolution2D(32, 3, 3, subsample=(1,1), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Convolution2D(48, 3, 3, subsample=(1,1), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.5))
-    model.add(Convolution2D(64, 3, 3, subsample=(1,1), activation='relu'))
+    model.add(Convolution2D(3, 1, 1, input_shape=input_shape))
+    model.add(Convolution2D(36, 3, 3, subsample=(2,2)))
+    model.add(Activation('relu'))
     model.add(MaxPooling2D((2, 2)))
     model.add(Dropout(0.5))
-    model.add(Convolution2D(128, 3, 3, subsample=(1,1), activation='relu'))
+    model.add(Convolution2D(64, 3, 3, subsample=(2,2)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D((2, 2)))
+    model.add(Dropout(0.5))
+    model.add(Convolution2D(128, 3, 3, subsample=(1,1)))
+    model.add(Activation('relu'))
     model.add(MaxPooling2D((2, 2)))
     model.add(Dropout(0.5))
     model.add(Flatten())
     model.add(Dense(512))
     model.add(Activation('relu'))
-    model.add(Dense(64))
+    model.add(Dense(128))
     model.add(Activation('relu'))
-    model.add(Dense(16))
+    model.add(Dense(25))
     model.add(Activation('relu'))
     model.add(Dense(1))
     return model
@@ -195,24 +196,38 @@ def mySimpleModel4():
     model.add(Dense(1, name='output', init='he_normal'))
     return model
 
-model = mySimpleModel3()
-model.compile(loss='mean_squared_error', optimizer='adam')
-history = model.fit_generator(process_batch(X_train, y_train, BATCH_SIZE),
-                                  len(X_train),
-                                  NUM_EPOCHS,
-                                  validation_data=process_batch(X_validation, y_validation, BATCH_SIZE),
-                                  nb_val_samples=len(X_validation))
-
 ################################################################
 # Save the model and weights
 ################################################################
 
-model_json = model.to_json()
-with open("./model.json", "w") as json_file:
-    json.dump(model_json, json_file)
+def save_model(file_json,file_weights):
+    model_json = model.to_json()
+    with open(file_json, "w") as json_file:
+        json.dump(model_json, json_file)
+    model.save_weights(file_weights)
+    print("Saved model to file,"file_json)
 
-model.save_weights("./model.h5")
-print("Saved model to disk")
+model = mySimpleModel3()
+model.compile(loss='mean_squared_error', optimizer='adam')
+i_best = 0
+val_best = 1000
+for i_pr in range(5):
+    history = model.fit_generator(process_batch(X_train, y_train, BATCH_SIZE),
+                                  len(X_train),
+                                  NUM_EPOCHS,
+                                  validation_data=process_batch(X_validation, y_validation, BATCH_SIZE),
+                                  nb_val_samples=len(X_validation))
+    file_json = "./model" + str(i_pr) + ".json"
+    file_weights = "./model" + str(i_pr) + ".h5"
+    save_model(file_json,file_weights)
+        
+    val_loss = history.history['val_loss'][0]
+    if val_loss < val_best:
+        i_best = i_pr 
+        val_best = val_loss
+        file_json = 'model_best.json'
+        file_weights = 'model_best.h5'
+        save_model(file_json,file_weights)
 
 ################################################################
 # visualize model history for loss
