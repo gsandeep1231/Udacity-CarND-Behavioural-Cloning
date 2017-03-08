@@ -135,6 +135,39 @@ def mySimpleModel3():
     model.add(Convolution2D(3,1,1, border_mode='valid', name='conv0', init='he_normal'))
     model.add(Convolution2D(32,filter_size,filter_size, border_mode='valid', name='conv1', init='he_normal'))
     model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Convolution2D(64,filter_size,filter_size, border_mode='valid', name='conv3', init='he_normal'))
+    model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Convolution2D(128,filter_size,filter_size, border_mode='valid', name='conv5', init='he_normal'))
+    model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Flatten())
+    model.add(Dense(512,name='hidden1', init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(64,name='hidden2', init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(16,name='hidden3',init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(1, name='output', init='he_normal'))
+    return model
+
+def mySimpleModel4():
+    #input_shape = (25, 100, 1)
+    input_shape = (64, 64, 3)
+    filter_size = 3
+    pool_size = (2,2)
+    model = Sequential()
+    model.add(Lambda(lambda x: x/255.-0.5,input_shape=input_shape))
+    model.add(Convolution2D(3,1,1, border_mode='valid', name='conv0', init='he_normal'))
+    model.add(Convolution2D(32,filter_size,filter_size, border_mode='valid', name='conv1', init='he_normal'))
+    model.add(ELU())
     model.add(Convolution2D(32,filter_size,filter_size, border_mode='valid', name='conv2', init='he_normal'))
     model.add(ELU())
     model.add(MaxPooling2D(pool_size=pool_size))
@@ -164,8 +197,7 @@ def mySimpleModel3():
     model.add(Dense(1, name='output', init='he_normal'))
     return model
 
-
-model = mySimpleModel2()
+model = mySimpleModel3()
 model.compile(loss='mean_squared_error', optimizer='adam')
 history = model.fit_generator(process_batch(X_train, y_train, BATCH_SIZE),
                                   len(X_train),
