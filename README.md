@@ -46,7 +46,13 @@ Test set is not needed for this project since the simulator in autonomous mode i
 
 ##Model Architecture
 ###CNN Layers
-I used a modified Nvidia model for my training. Below are the layers in my model:<BR>
+I tried several models, including NVIDIA model too. However I found that the NVIDIA model was cause overfit for my data.
+I needed a slightly simpler model. With NVIDIA model, the car would just sway a lot.
+So I started of by initially adding just one convolution layer and one fully connected layer, and kept increasing the layers
+and experimenting with them until I got good results. Finally I settled with below architecture:
+
+![alt tag](./model_flowchart.jpg)
+
 1. Convolution Layer 1<BR>
 2. MaxPooling<BR>
 3. Convolution Layer 2<BR>
